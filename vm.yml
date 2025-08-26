@@ -1,0 +1,53 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: windows-11-acm-test
+  namespace: raul
+spec:
+  dataVolumeTemplates:
+    - metadata:
+        name: windows-11-virtio-tomato-vole-57-volume
+      spec:
+        sourceRef:
+          kind: DataSource
+          name: win11
+          namespace: default
+        storage:
+          resources:
+            requests:
+              storage: '21474836480'
+          storageClassName: ocs-external-storagecluster-ceph-rbd
+  instancetype:
+    name: u1.large
+  preference:
+    name: windows.11.virtio
+    kind: VirtualMachineClusterPreference
+  runStrategy: Always
+  template:
+    metadata:
+      labels:
+        network.kubevirt.io/headlessService: headless
+        app: windows
+    spec:
+      domain:
+        devices:
+          autoattachPodInterface: false
+          disks:
+            - cdrom:
+                bus: sata
+              name: sysprep
+          interfaces:
+            - masquerade: {}
+              name: default
+      networks:
+        - name: default
+          pod: {}
+      subdomain: headless
+      volumes:
+        - dataVolume:
+            name: windows-11-virtio-tomato-vole-57-volume
+          name: rootdisk
+        - name: sysprep
+          sysprep:
+            configMap:
+              name: windows-vm-configmap
