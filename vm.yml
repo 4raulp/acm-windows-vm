@@ -6,7 +6,7 @@ metadata:
 spec:
   dataVolumeTemplates:
     - metadata:
-        name: {{NAME}}-volume
+        name: windows-11-acm-test
       spec:
         sourceRef:
           kind: DataSource
@@ -45,7 +45,7 @@ spec:
       subdomain: headless
       volumes:
         - dataVolume:
-            name: {{NAME}}-volume
+            name: windows-11-acm-test
           name: rootdisk
         - name: sysprep
           sysprep:
