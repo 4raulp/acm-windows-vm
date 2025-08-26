@@ -6,7 +6,7 @@ metadata:
 spec:
   dataVolumeTemplates:
     - metadata:
-        name: windows-11-virtio-tomato-vole-57-volume
+        name: {{NAME}}-volume
       spec:
         sourceRef:
           kind: DataSource
@@ -45,7 +45,7 @@ spec:
       subdomain: headless
       volumes:
         - dataVolume:
-            name: windows-11-virtio-tomato-vole-57-volume
+            name: {{NAME}}-volume
           name: rootdisk
         - name: sysprep
           sysprep:
